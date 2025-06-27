@@ -1,37 +1,62 @@
 # gh-copilot-pydantic-ai
 
-GitHub Copilot integration with Pydantic AI.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://badge.fury.io/py/gh-pydantic-ai.svg)](https://badge.fury.io/py/gh-pydantic-ai)
+[![Python Version](https://img.shields.io/pypi/pyversions/gh-pydantic-ai.svg)](https://pypi.org/project/gh-pydantic-ai)
+
+GitHub Copilot Provider for Pydantic AI.
 
 Inspired by [ericc-ch/copilot-api/](https://github.com/ericc-ch/copilot-api/).
 
-# Usage
+## Installation
 
-1. Install the package:
+Install the package using pipx or your favorite package manager:
+
 ```bash
-uvx tool install gh-pydantic-ai
+pip install gh-pydantic-ai
+# or with uv
+uv tool install gh-pydantic-ai
 ```
 
-2. Authenticate with GitHub:
+## CLI Usage
+
+### Authentication
+
+First, you need to authenticate with your GitHub account.
+
 ```bash
 gh-clai-internal auth
 ```
 
-3. Use the tool in your terminal:
+### Query
+
+After authentication, you can use the `gh-clai` command to interact with GitHub Copilot:
+
 ```bash
 gh-clai "What is the capital of France?"
 ```
 
-# pydantic-ai
+## Library Usage
 
-Library also provides Provider and Model classes to use together with Pydantic AI.
+This library also provides `GHCopilotModel` for integration with Pydantic AI.
 
 ```python
 from gh_pydantic_ai import GHCopilotModel
 from pydantic_ai import Agent
 
 agent = Agent(
-    model=GHCopilotModel(
-        model_name="gpt-4.1",
-    ),
+    model=GHCopilotModel()
 )
+
+result = agent.run_sync("What is the capital of France?")
+print(result)
 ```
+
+## Commands
+
+- `gh-clai`: Main command to interact with GitHub Copilot, works same as `clai` command from `pydantic-ai`.
+- `gh-clai-internal`: Internal commands for authentication and other utilities.
+  - `auth`: Authenticate with GitHub.
+  - `models`: List available models.
+  - `usage`: Show usage information.
+
