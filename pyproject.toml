@@ -9,10 +9,12 @@ dependencies = [
     "click>=8.2.1",
     "httpx>=0.28.1",
     "pydantic-ai>=0.2.19",
+    "pyperclip>=1.9.0",
 ]
 
 [project.scripts]
 gh-clai = "gh_pydantic_ai.cli:cli"
+gh-clai-internal = "gh_pydantic_ai.cli:internal_cli"
 
 [build-system]
 requires = ["hatchling"]
@@ -37,6 +39,7 @@ ignore = [
     # single rule exclude
     "TRY003",  # allow long exc message
     "COM812",  # will be handled by formatting
+    "TC006",   # ignore quotes in typing.cast calls
 
     # full rule exclude
     "D",   # ignore docstrings

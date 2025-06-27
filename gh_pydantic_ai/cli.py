@@ -1,5 +1,6 @@
 import asyncio
 import sys
+from typing import Any, cast
 
 import click
 import rich
@@ -12,11 +13,11 @@ from gh_pydantic_ai.auth import get_usage, is_authenticated, try_get_access_toke
 from gh_pydantic_ai.client import GHCopilotClient
 
 
-@click.group(invoke_without_command=True)
-@click.option(
-    "-q",
-    "--prompt",
-    required=False,
+@click.command()
+@click.argument(
+    "prompt",
+    nargs=-1,
+    type=click.STRING,
 )
 @click.option(
     "--model",
@@ -24,13 +25,17 @@ from gh_pydantic_ai.client import GHCopilotClient
     help="The model to use for GitHub Copilot.",
     envvar="GH_COPILOT_MODEL",
 )
-@click.pass_context
 def cli(
-    ctx: click.Context,
     prompt: str | None,
     model: str,
 ) -> None:
-    if ctx.invoked_subcommand is not None:
+    if not is_authenticated():
+        rich.print(
+            Text(
+                "You need to authenticate with GitHub Copilot first. Run `gh-clai-internal auth` to authenticate.",
+                style="yellow",
+            ),
+        )
         return
 
     new_argv = []
@@ -41,7 +46,7 @@ def cli(
     new_argv.extend(
         [
             "--agent",
-            f"gh_pydantic_ai.agent:{model}",
+            f"gh_pydantic_ai.agent_cli:{model}",
         ],
     )
 
@@ -49,12 +54,12 @@ def cli(
     _cli.cli(prog_name="gh")
 
 
-@cli.group()
-def internal() -> None:
+@click.group()
+def internal_cli() -> None:
     pass
 
 
-async def _available_models() -> list[str]:
+async def _available_models() -> list[dict[str, Any]]:
     async with GHCopilotClient(
         base_url="https://api.githubcopilot.com",
     ) as client:
@@ -63,19 +68,30 @@ async def _available_models() -> list[str]:
         )
 
         response.raise_for_status()
-        return [model["id"] for model in response.json().get("data", [])]
+        return cast(list[dict[str, Any]], response.json()["data"])
 
 
-@internal.command()
-def models() -> None:
+@internal_cli.command()
+@click.option("--raw", is_flag=True, help="Display raw model data.")
+def models(
+    *,
+    raw: bool,
+) -> None:
     if not is_authenticated():
         rich.print("You need to authenticate with GitHub Copilot first.")
         return
 
-    _models = asyncio.run(_available_models())
-    if not _models:
+    _models_raw = asyncio.run(_available_models())
+
+    if not _models_raw:
         rich.print("No models available.")
         return
+
+    if raw:
+        rich.print(_models_raw)
+        return
+
+    _models = [model["id"] for model in _models_raw]
 
     rich.print("Available models:")
 
@@ -83,7 +99,7 @@ def models() -> None:
         rich.print(f"- {model}")
 
 
-@internal.command()
+@internal_cli.command()
 def auth() -> None:
     if is_authenticated():
         rich.print(
@@ -103,7 +119,7 @@ def auth() -> None:
     asyncio.run(try_get_access_token(device_login_fallback=True))
 
 
-@internal.command()
+@internal_cli.command()
 def usage() -> None:
     if not is_authenticated():
         rich.print("You need to authenticate with GitHub Copilot first.")

@@ -1,10 +1,13 @@
 import asyncio
 import time
+import webbrowser
 from collections.abc import AsyncGenerator, Generator
+from contextlib import suppress
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, cast
 
+import pyperclip
 import rich
 from httpx import AsyncClient, Auth, Request, Response
 
@@ -27,13 +30,13 @@ async def get_device_code(client: AsyncClient) -> Data:
     )
     response.raise_for_status()
 
-    return cast("Data", response.json())
+    return cast(Data, response.json())
 
 
 async def wait_for_login(
     client: AsyncClient,
     device_code: str,
-    interval: int = 1,
+    interval: float,
 ) -> str:
     while True:
         response = await client.post(
@@ -49,12 +52,13 @@ async def wait_for_login(
             case {"access_token": str(access_token)}:
                 return access_token
             case _:
+                rich.print("Not logged in yet, waiting for user to authenticate...")
                 await asyncio.sleep(interval)
 
 
 async def try_get_access_token(
     *,
-    device_login_fallback: bool = True,
+    device_login_fallback: bool = False,
 ) -> str:
     CONFIG_ROOT.mkdir(parents=True, exist_ok=True)
 
@@ -74,10 +78,17 @@ async def try_get_access_token(
             f"Please open {device_code_info['verification_uri']} and enter the code: {device_code_info['user_code']}",
         )
 
-        access_token = await wait_for_login(
-            client,
-            device_code_info["device_code"],
-        )
+        with suppress(Exception):
+            pyperclip.copy(device_code_info["user_code"])
+        with suppress(Exception):
+            webbrowser.open_new_tab(device_code_info["verification_uri"])
+
+        async with asyncio.timeout(device_code_info["expires_in"]):
+            access_token = await wait_for_login(
+                client,
+                device_code_info["device_code"],
+                interval=device_code_info["interval"],
+            )
 
     TOKEN_FILE.write_text(access_token)
     return access_token
@@ -96,7 +107,7 @@ async def get_copilot_token() -> Data:
         )
 
         response.raise_for_status()
-        return cast("Data", response.json())
+        return cast(Data, response.json())
 
 
 async def get_usage() -> Data:
@@ -112,7 +123,7 @@ async def get_usage() -> Data:
         )
 
         response.raise_for_status()
-        return cast("Data", response.json())
+        return cast(Data, response.json())
 
 
 def is_authenticated() -> bool:

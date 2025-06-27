@@ -1,10 +1,10 @@
 from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIModel
 
-from gh_pydantic_ai.provider import GitHubCopilotProvider
+from .provider import GitHubCopilotProvider
 
 
-def __getattr__(model: str) -> Agent:
+def get_agent(model: str) -> Agent:
     return Agent(
         model=OpenAIModel(
             model_name=model,
@@ -13,4 +13,6 @@ def __getattr__(model: str) -> Agent:
     )
 
 
-__all__: list[str] = []
+__all__ = [
+    "get_agent",
+]
