@@ -3,13 +3,39 @@ name = "gh-pydantic-ai"
 version = "0.1.0"
 description = "GitHub Copilot Provider for Pydantic AI"
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.13"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Unix",
+    "Operating System :: POSIX :: Linux",
+    "Environment :: Console",
+    "Environment :: MacOS X",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet",
+]
 
 dependencies = [
     "click>=8.2.1",
     "httpx>=0.28.1",
     "pydantic-ai>=0.2.19",
     "pyperclip>=1.9.0",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.16.1",
+    "pre-commit>=4.2.0",
+    "ruff>=0.12.1",
 ]
 
 [project.scripts]
@@ -19,13 +45,6 @@ gh-clai-internal = "gh_pydantic_ai.cli:internal_cli"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[dependency-groups]
-dev = [
-    "mypy>=1.16.1",
-    "pre-commit>=4.2.0",
-    "ruff>=0.12.1",
-]
 
 [tool.ruff]
 line-length = 120
