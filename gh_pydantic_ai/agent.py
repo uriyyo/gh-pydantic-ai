@@ -1,14 +1,15 @@
 from pydantic_ai import Agent
-from pydantic_ai.models.openai import OpenAIModel
 
-from .provider import GitHubCopilotProvider
+from .model import GHCopilotModel
+from .provider import GHCopilotProvider
+from .types import GHCopilotModelName
 
 
-def get_agent(model: str) -> Agent:
+def get_agent(model: GHCopilotModelName) -> Agent:
     return Agent(
-        model=OpenAIModel(
+        model=GHCopilotModel(
             model_name=model,
-            provider=GitHubCopilotProvider(),
+            provider=GHCopilotProvider(),
         ),
     )
 

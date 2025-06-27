@@ -1,11 +1,14 @@
+from typing import cast
+
 from pydantic_ai import Agent
 from pydantic_ai._cli import cli_system_prompt
 
-from gh_pydantic_ai.agent import get_agent
+from .agent import get_agent
+from .types import GHCopilotModelName
 
 
 def __getattr__(model: str) -> Agent:
-    agent = get_agent(model)
+    agent = get_agent(cast(GHCopilotModelName, model))
     agent.system_prompt(cli_system_prompt)
 
     return agent

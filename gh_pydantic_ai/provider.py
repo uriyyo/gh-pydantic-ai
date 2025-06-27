@@ -4,7 +4,7 @@ from pydantic_ai.providers import Provider
 from .client import GHCopilotClient
 
 
-class GitHubCopilotProvider(Provider[AsyncOpenAI]):
+class GHCopilotProvider(Provider[AsyncOpenAI]):
     @property
     def name(self) -> str:
         return "gh-copilot"
@@ -26,5 +26,5 @@ class GitHubCopilotProvider(Provider[AsyncOpenAI]):
 
 
 __all__ = [
-    "GitHubCopilotProvider",
+    "GHCopilotProvider",
 ]

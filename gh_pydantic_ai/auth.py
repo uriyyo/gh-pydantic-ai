@@ -5,7 +5,7 @@ from collections.abc import AsyncGenerator, Generator
 from contextlib import suppress
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, cast
+from typing import cast
 
 import pyperclip
 import rich
@@ -13,14 +13,13 @@ from httpx import AsyncClient, Auth, Request, Response
 
 from .consts import GITHUB_APP_SCOPES, GITHUB_CLIENT_ID
 from .headers import copilot_headers, github_headers, standard_headers
+from .types import DataStrAny
 
 CONFIG_ROOT = Path.home() / ".config" / "gh-copilot-pydantic-ai"
 TOKEN_FILE = CONFIG_ROOT / "access_token.txt"
 
-type Data = dict[str, Any]
 
-
-async def get_device_code(client: AsyncClient) -> Data:
+async def get_device_code(client: AsyncClient) -> DataStrAny:
     response = await client.post(
         "/login/device/code",
         json={
@@ -30,7 +29,7 @@ async def get_device_code(client: AsyncClient) -> Data:
     )
     response.raise_for_status()
 
-    return cast(Data, response.json())
+    return cast(DataStrAny, response.json())
 
 
 async def wait_for_login(
@@ -94,7 +93,7 @@ async def try_get_access_token(
     return access_token
 
 
-async def get_copilot_token() -> Data:
+async def get_copilot_token() -> DataStrAny:
     async with AsyncClient(
         base_url="https://api.github.com/",
     ) as client:
@@ -107,10 +106,10 @@ async def get_copilot_token() -> Data:
         )
 
         response.raise_for_status()
-        return cast(Data, response.json())
+        return cast(DataStrAny, response.json())
 
 
-async def get_usage() -> Data:
+async def get_usage() -> DataStrAny:
     async with AsyncClient(
         base_url="https://api.github.com/",
     ) as client:
@@ -123,7 +122,7 @@ async def get_usage() -> Data:
         )
 
         response.raise_for_status()
-        return cast(Data, response.json())
+        return cast(DataStrAny, response.json())
 
 
 def is_authenticated() -> bool:

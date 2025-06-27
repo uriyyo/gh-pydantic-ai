@@ -1,6 +1,6 @@
 import asyncio
 import sys
-from typing import Any, cast
+from typing import Any, cast, get_args
 
 import click
 import rich
@@ -11,6 +11,7 @@ from rich.text import Text
 
 from gh_pydantic_ai.auth import get_usage, is_authenticated, try_get_access_token
 from gh_pydantic_ai.client import GHCopilotClient
+from gh_pydantic_ai.types import GHCopilotModelName
 
 
 @click.command()
@@ -24,6 +25,7 @@ from gh_pydantic_ai.client import GHCopilotClient
     default="gpt-4.1",
     help="The model to use for GitHub Copilot.",
     envvar="GH_COPILOT_MODEL",
+    type=click.Choice([*get_args(GHCopilotModelName.__value__)]),
 )
 def cli(
     prompt: str | None,

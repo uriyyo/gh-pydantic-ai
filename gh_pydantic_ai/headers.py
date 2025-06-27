@@ -1,8 +1,7 @@
 import uuid
 
 from .consts import API_VERSION, EDITOR_PLUGIN_VERSION, USER_AGENT
-
-type Headers = dict[str, str]
+from .types import Headers
 
 
 def standard_headers() -> Headers:
