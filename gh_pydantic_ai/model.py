@@ -27,8 +27,11 @@ class GHCopilotModel(OpenAIModel):
             system_prompt_role=system_prompt_role,
         )
 
-    def _process_response(self, response: chat.ChatCompletion) -> ModelResponse:
-        response.created = response.created or int(datetime.now(UTC).timestamp())
+    def _process_response(self, response: chat.ChatCompletion | str) -> ModelResponse:
+        if isinstance(response, chat.ChatCompletion):
+            response.object = response.object or "chat.completion"
+            response.created = response.created or int(datetime.now(UTC).timestamp())
+
         return super()._process_response(response)
 
 
