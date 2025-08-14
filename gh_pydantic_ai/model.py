@@ -14,20 +14,21 @@ from .types import GHCopilotModelName
 class GHCopilotModel(OpenAIModel):
     def __init__(
         self,
-        model_name: GHCopilotModelName = "gpt-4.1",
+        model_name: GHCopilotModelName | None,
         *,
         provider: Provider[AsyncOpenAI] | None = None,
         profile: ModelProfileSpec | None = None,
         system_prompt_role: OpenAISystemPromptRole | None = None,
     ) -> None:
         super().__init__(
-            model_name=model_name,
+            model_name=model_name or "gpt-4.1",  # gpt-4.1 because it free and without usage limit
             provider=provider or GHCopilotProvider(),
             profile=profile,
             system_prompt_role=system_prompt_role,
         )
 
     def _process_response(self, response: chat.ChatCompletion | str) -> ModelResponse:
+        # todo: verify that we need it
         if isinstance(response, chat.ChatCompletion):
             response.object = response.object or "chat.completion"
             response.created = response.created or int(datetime.now(UTC).timestamp())

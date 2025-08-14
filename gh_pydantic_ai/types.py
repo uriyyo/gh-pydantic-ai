@@ -12,6 +12,8 @@ type GHCopilotModelName = Literal[
     "gpt-4-0613",
     "gpt-4-0125-preview",
     "gpt-4.1",
+    "gpt-5",
+    "gpt-5-mini",
     "gpt-4o",
     "gpt-4o-2024-11-20",
     "gpt-4o-2024-05-13",
