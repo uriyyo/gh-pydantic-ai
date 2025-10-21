@@ -11,6 +11,7 @@ from rich.text import Text
 
 from gh_pydantic_ai.auth import get_usage, is_authenticated, try_get_access_token
 from gh_pydantic_ai.client import GHCopilotClient
+from gh_pydantic_ai.consts import DEFAULT_MODEL
 
 
 @click.command()
@@ -21,7 +22,7 @@ from gh_pydantic_ai.client import GHCopilotClient
 )
 @click.option(
     "--model",
-    default="gpt-4.1",
+    default=DEFAULT_MODEL,
     help="The model to use for GitHub Copilot.",
     envvar="GH_COPILOT_MODEL",
 )

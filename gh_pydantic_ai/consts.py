@@ -1,3 +1,5 @@
+DEFAULT_MODEL = "gpt-5-mini"  # gpt-5-mini because it free and without usage limit
+
 GITHUB_BASE_URL = "https://github.com"
 GITHUB_CLIENT_ID = "Iv1.b507a08c87ecfe98"
 GITHUB_APP_SCOPES = ["read:user"]
@@ -10,6 +12,7 @@ API_VERSION = "2025-04-01"
 __all__ = [
     "API_VERSION",
     "COPILOT_VERSION",
+    "DEFAULT_MODEL",
     "EDITOR_PLUGIN_VERSION",
     "GITHUB_APP_SCOPES",
     "GITHUB_BASE_URL",

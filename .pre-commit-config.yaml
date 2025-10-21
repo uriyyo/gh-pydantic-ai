@@ -19,8 +19,9 @@ repos:
 
   - repo: local
     hooks:
-      - id: mypy
+      - id: ty
         language: python
-        name: mypy
+        name: ty
         pass_filenames: false
-        entry: uv run mypy gh_pydantic_ai --show-error-codes
+        language_version: python3.13
+        entry: uv run ty check gh_pydantic_ai
