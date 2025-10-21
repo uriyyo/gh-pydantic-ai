@@ -1,6 +1,6 @@
 [project]
 name = "gh-pydantic-ai"
-version = "0.2.1"
+version = "0.3.0"
 description = "GitHub Copilot Provider for Pydantic AI"
 readme = "README.md"
 license = "MIT"
@@ -27,7 +27,7 @@ classifiers = [
 dependencies = [
     "click>=8.2.1",
     "httpx>=0.28.1",
-    "pydantic-ai>=1.2.0",
+    "pydantic-ai-slim[openai,cli]>=1.2.0",
     "pyperclip>=1.9.0",
 ]
 

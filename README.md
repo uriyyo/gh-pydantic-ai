@@ -41,11 +41,11 @@ gh-clai "What is the capital of France?"
 This library also provides `GHCopilotModel` for integration with Pydantic AI.
 
 ```python
-from gh_pydantic_ai import GHCopilotModel
+from gh_pydantic_ai import GHCopilotChatModel
 from pydantic_ai import Agent
 
 agent = Agent(
-    model=GHCopilotModel()
+    model=GHCopilotChatModel()
 )
 
 result = agent.run_sync("What is the capital of France?")

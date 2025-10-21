@@ -1,6 +1,6 @@
 import uuid
 
-from .consts import API_VERSION, EDITOR_PLUGIN_VERSION, USER_AGENT
+from .consts import API_VERSION, EDITOR_PLUGIN_VERSION, USER_AGENT, VSCODE_VERSION
 from .types import Headers
 
 
@@ -26,7 +26,7 @@ def copilot_headers() -> Headers:
     return {
         **standard_headers(),
         "copilot-integration-id": "vscode-chat",
-        "editor-version": "vscode/1.101.2",
+        "editor-version": f"vscode/{VSCODE_VERSION}",
         "editor-plugin-version": EDITOR_PLUGIN_VERSION,
         "user-agent": USER_AGENT,
         "openai-intent": "conversation-panel",
