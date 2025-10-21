@@ -1,5 +1,7 @@
 from openai import AsyncOpenAI
-from pydantic_ai.models.openai import OpenAIChatModel, OpenAISystemPromptRole
+from openai.types import chat
+from pydantic_ai import ModelResponse, ModelSettings
+from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.profiles import ModelProfileSpec
 from pydantic_ai.providers import Provider
 
@@ -15,14 +17,20 @@ class GHCopilotModel(OpenAIChatModel):
         *,
         provider: Provider[AsyncOpenAI] | None = None,
         profile: ModelProfileSpec | None = None,
-        system_prompt_role: OpenAISystemPromptRole | None = None,
+        settings: ModelSettings | None = None,
     ) -> None:
         super().__init__(
             model_name=model_name or DEFAULT_MODEL,
             provider=provider or GHCopilotProvider(),
             profile=profile,
-            system_prompt_role=system_prompt_role,
+            settings=settings,
         )
+
+    def _process_response(self, response: chat.ChatCompletion | str) -> ModelResponse:
+        if isinstance(response, chat.ChatCompletion):
+            response.object = response.object or "chat.completion"
+
+        return super()._process_response(response)
 
 
 __all__ = [
