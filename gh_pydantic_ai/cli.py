@@ -1,10 +1,14 @@
+import argparse
 import asyncio
+import os
 import sys
+from importlib.metadata import version as _metadata_version
 from typing import Any, cast
 
 import click
 import rich
 from pydantic_ai import _cli
+from rich.console import Console
 from rich.pretty import Pretty
 from rich.table import Table
 from rich.text import Text
@@ -14,22 +18,7 @@ from gh_pydantic_ai.client import GHCopilotClient
 from gh_pydantic_ai.consts import DEFAULT_MODEL
 
 
-@click.command()
-@click.argument(
-    "prompt",
-    nargs=-1,
-    type=click.STRING,
-)
-@click.option(
-    "--model",
-    default=DEFAULT_MODEL,
-    help="The model to use for GitHub Copilot.",
-    envvar="GH_COPILOT_MODEL",
-)
-def cli(
-    prompt: str | None,
-    model: str,
-) -> None:
+def cli() -> None:
     if not is_authenticated():
         rich.print(
             Text(
@@ -39,19 +28,40 @@ def cli(
         )
         return
 
-    new_argv = []
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("-m", "--model", default=None, type=str)
+    parser.add_argument("-a", "--agent", default=None, type=str)
+    parser.add_argument("-l", "--list-models", action="store_true")
+    parser.add_argument("--version", action="store_true")
 
-    if prompt:
-        new_argv.append(prompt)
+    args, _ = parser.parse_known_args()
+    console = Console()
 
-    new_argv.extend(
-        [
+    if args.version:
+        name_version = f"[green]gh - GH-Copilot Pydantic AI CLI v{_metadata_version('gh_pydantic_ai')}[/green]"
+        console.print(name_version, highlight=False)
+        return
+
+    if args.list_models:
+        _models = asyncio.run(_available_models())
+
+        console.print("[green]Available models:[/green]")
+        for model in _models:
+            console.print(f"  {model['id']}", highlight=False)
+
+        return
+
+    if not args.agent:
+        model = args.model or os.getenv("GH_COPILOT_MODEL") or DEFAULT_MODEL
+
+        new_argv = [
             "--agent",
             f"gh_pydantic_ai.agent_cli:{model}",
-        ],
-    )
+            *sys.argv[1:],
+        ]
 
-    sys.argv[1:] = new_argv
+        sys.argv[1:] = new_argv
+
     _cli.cli(prog_name="gh")
 
 
