@@ -400,7 +400,7 @@ wheels = [
 
 [[package]]
 name = "pydantic-ai-slim"
-version = "1.7.0"
+version = "1.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "genai-prices" },
@@ -411,9 +411,9 @@ dependencies = [
     { name = "pydantic-graph" },
     { name = "typing-inspection" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c9/eb/ad788c802cd107321188a96f06b896a16a68bc8342a8034ef68584480503/pydantic_ai_slim-1.7.0.tar.gz", hash = "sha256:2bd0e637ecc311ac672758c163fa738235651cf8a593f0abcf8e833e6e89e014", size = 284460, upload-time = "2025-10-28T01:09:47.488Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/23/76/76118d18ea17854d9d3e4f11b38f2d513dbbe6f37383649e59ca9c8fce0c/pydantic_ai_slim-1.9.0.tar.gz", hash = "sha256:c3047ae6eab0df4bb8a344bf1f1ef8da2806d01c992cdefec258824125d79185", size = 296338, upload-time = "2025-10-29T23:04:43.205Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b1/1a/0a66c82f0c10fb3cd697f35d3fe99a3c27ca6328774ca619e49315aa557e/pydantic_ai_slim-1.7.0-py3-none-any.whl", hash = "sha256:76b03f1381be98e86bce2da1709ecbee16241b1a5f641aa19982fb583c3d6849", size = 375720, upload-time = "2025-10-28T01:09:34.692Z" },
+    { url = "https://files.pythonhosted.org/packages/99/e8/cee4c5499c6e45a9d49f041093572185fe903e9f7f5fcf2e66a1e9c1fe91/pydantic_ai_slim-1.9.0-py3-none-any.whl", hash = "sha256:15d1179bcfba75e6fd7f9de843c2c660967902ec190d9068c727bfbee075e141", size = 395443, upload-time = "2025-10-29T23:04:30.707Z" },
 ]
 
 [package.optional-dependencies]
@@ -478,7 +478,7 @@ wheels = [
 
 [[package]]
 name = "pydantic-graph"
-version = "1.7.0"
+version = "1.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "httpx" },
@@ -486,9 +486,9 @@ dependencies = [
     { name = "pydantic" },
     { name = "typing-inspection" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/10/dd/a6707f30f2c2348dd52e8d80b6dfddd1d2984f6912fdc69b5f40eccafb18/pydantic_graph-1.7.0.tar.gz", hash = "sha256:eeaf857c608c2f6c6a49571bbbf4458a40b947a6c0ff60842fe564e13bf831bf", size = 56932, upload-time = "2025-10-28T01:09:49.812Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a0/a3/6dbb754a42b8ebed12ceff31f4b49bc6d46d15f7862249246f090d8a2791/pydantic_graph-1.9.0.tar.gz", hash = "sha256:56338326a1ac16d0aa5d690cfbf9d28b0001613b7187b9cc091938aa95b1dda4", size = 56929, upload-time = "2025-10-29T23:04:45.089Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/24/da/e7e94d6601cbbd60216cd13d0b03410593a61d806dc2130f92fb52b2a444/pydantic_graph-1.7.0-py3-none-any.whl", hash = "sha256:ae51cd834517988a3e9331492143f4b6bd25a561caf4c607d7263be4f1028332", size = 70913, upload-time = "2025-10-28T01:09:38.333Z" },
+    { url = "https://files.pythonhosted.org/packages/14/60/fe2ddb9982cc985c78b248e04449c06d013805f755c6d08f0d4aa35280da/pydantic_graph-1.9.0-py3-none-any.whl", hash = "sha256:2a8298649bac9e5d00a24065607601edb3e4915d2aaee78aebbe6a95819ab2c8", size = 70915, upload-time = "2025-10-29T23:04:34.279Z" },
 ]
 
 [[package]]
@@ -653,16 +653,16 @@ wheels = [
 
 [[package]]
 name = "virtualenv"
-version = "20.35.3"
+version = "20.35.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "distlib" },
     { name = "filelock" },
     { name = "platformdirs" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a4/d5/b0ccd381d55c8f45d46f77df6ae59fbc23d19e901e2d523395598e5f4c93/virtualenv-20.35.3.tar.gz", hash = "sha256:4f1a845d131133bdff10590489610c98c168ff99dc75d6c96853801f7f67af44", size = 6002907, upload-time = "2025-10-10T21:23:33.178Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/20/28/e6f1a6f655d620846bd9df527390ecc26b3805a0c5989048c210e22c5ca9/virtualenv-20.35.4.tar.gz", hash = "sha256:643d3914d73d3eeb0c552cbb12d7e82adf0e504dbf86a3182f8771a153a1971c", size = 6028799, upload-time = "2025-10-29T06:57:40.511Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/27/73/d9a94da0e9d470a543c1b9d3ccbceb0f59455983088e727b8a1824ed90fb/virtualenv-20.35.3-py3-none-any.whl", hash = "sha256:63d106565078d8c8d0b206d48080f938a8b25361e19432d2c9db40d2899c810a", size = 5981061, upload-time = "2025-10-10T21:23:30.433Z" },
+    { url = "https://files.pythonhosted.org/packages/79/0c/c05523fa3181fdf0c9c52a6ba91a23fbf3246cc095f26f6516f9c60e6771/virtualenv-20.35.4-py3-none-any.whl", hash = "sha256:c21c9cede36c9753eeade68ba7d523529f228a403463376cf821eaae2b650f1b", size = 6005095, upload-time = "2025-10-29T06:57:37.598Z" },
 ]
 
 [[package]]
