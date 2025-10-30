@@ -29,8 +29,11 @@ def cli() -> None:
         return
 
     parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("prompt", nargs="*")
     parser.add_argument("-m", "--model", default=None, type=str)
     parser.add_argument("-a", "--agent", default=None, type=str)
+    parser.add_argument("-t", "--code-theme")
+    parser.add_argument("--no-stream", action="store_true")
     parser.add_argument("-l", "--list-models", action="store_true")
     parser.add_argument("--version", action="store_true")
 
@@ -51,17 +54,31 @@ def cli() -> None:
 
         return
 
-    if not args.agent:
-        model = args.model or os.getenv("GH_COPILOT_MODEL") or DEFAULT_MODEL
+    model = args.model or os.getenv("GH_COPILOT_MODEL") or DEFAULT_MODEL
 
-        new_argv = [
+    new_args = []
+
+    if not args.agent:
+        new_args += [
             "--agent",
             f"gh_pydantic_ai.agent_cli:{model}",
-            *sys.argv[1:],
         ]
 
-        sys.argv[1:] = new_argv
+    if args.code_theme:
+        new_args += [
+            "--code-theme",
+            args.code_theme,
+        ]
 
+    if args.no_stream:
+        new_args += [
+            "--no-stream",
+        ]
+
+    if args.prompt:
+        new_args += [" ".join(args.prompt)]
+
+    sys.argv[1:] = new_args
     _cli.cli(prog_name="gh")
 
 
