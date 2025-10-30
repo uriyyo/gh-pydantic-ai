@@ -1,6 +1,6 @@
 [project]
 name = "gh-pydantic-ai"
-version = "0.3.1"
+version = "0.3.2"
 description = "GitHub Copilot Provider for Pydantic AI"
 readme = "README.md"
 license = "MIT"
