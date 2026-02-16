@@ -139,10 +139,10 @@ class GHCopilotAuth(Auth):
         if not self._token or not self._expires_at:
             return True
 
-        return self._expires_at <= (time.time() + 60)  # 60 seconds buffer
+        return self._expires_at <= (time.time() + 60 * 5)  # 5 minutes buffer
 
     async def async_auth_flow(self, request: Request) -> AsyncGenerator[Request, Response]:
-        if not self._token:
+        if not self._token or self.is_expired:
             data = await get_copilot_token()
 
             self._token = data["token"]
