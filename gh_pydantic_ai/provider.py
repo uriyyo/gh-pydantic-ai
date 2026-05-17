@@ -19,7 +19,7 @@ class GHCopilotProvider(Provider[AsyncOpenAI]):
 
     def __init__(self) -> None:
         self._client = AsyncOpenAI(
-            api_key="",
+            api_key="gh-pydantic-noop",  # required by pydantic-ai
             base_url=self.base_url,
             http_client=GHCopilotClient(),
         )

@@ -13,7 +13,8 @@ USER_AGENT = f"GitHubCopilotChat/${COPILOT_VERSION}"
 API_VERSION = "2025-04-01"
 
 RESPONSES_API_MODELS: set[GHCopilotModelName] = {
-    "gpt-5-codex",
+    "gpt-5.2-codex",
+    "gpt-5.3-codex",
 }
 
 __all__ = [
